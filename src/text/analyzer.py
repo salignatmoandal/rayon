@@ -31,7 +31,7 @@ class TextAnalyzer:
             self.logger.error(f"Error extracting locations: {e}")
             return None
     
-    def extract_categories(self, text: str) -> Optional[Dict[str, Any]]:
+    def extract_category(self, text: str) -> Optional[Dict[str, Any]]:
         """
         Extract categories from text.
         Args: Text.
