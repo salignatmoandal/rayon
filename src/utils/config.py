@@ -23,9 +23,9 @@ OPENAI_MAX_TOKENS = 1000
 # Speech Recognition configuration
 SPEECH_RECOGNITION_CONFIG = {
     "energy_threshold": 3000,
-    "pause_threshold": 0.8,
-    "phrase_threshold": 0.3,
-    "non_speaking_duration": 0.5,
+    "pause_threshold": 0.1,
+    "phrase_threshold": 0.2,
+    "non_speaking_duration": 0.1,
     "max_attempts": 2,
     "timeout": 15.0
 }
