@@ -57,7 +57,11 @@ class voiceNavigationApp:
                 return False
 
             # 4. AI suggestion
-            suggestions = self.ai_suggester.get_suggestions(coordinates, category)
+            suggestions = self.ai_suggester.get_suggestions(
+                location=location,
+                coordinates=coordinates,
+                category=category
+            )
             if not suggestions:
                 self.logger.error("No suggestions found")
                 return False
