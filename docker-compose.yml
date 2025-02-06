@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  voice-nav:
+    build: .
+    volumes:
+      - ./logs:/app/logs
+      - ./output:/app/output
+    environment:
+      - OPENCAGE_API_KEY=${OPENCAGE_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    devices:
+      - "/dev/snd:/dev/snd"  # Accès au périphérique audio
