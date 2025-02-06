@@ -1,7 +1,7 @@
 import logging
 import os 
 from datetime import datetime
-from config import LOG_DIR
+from utils.config import LOG_DIR
 
 def setup_logger(name: str= __name__) -> logging.Logger:
     """
@@ -17,17 +17,16 @@ def setup_logger(name: str= __name__) -> logging.Logger:
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
 
-    # Create a file handler
+    # Create handlers and formatters
     file_handler = logging.FileHandler(os.path.join(LOG_DIR, f"{datetime.now().strftime('%Y-%m-%d')}.log"))
     file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
     file_handler.setLevel(logging.DEBUG)
 
-    # Create a stream handler
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
     stream_handler.setLevel(logging.DEBUG)
 
-    # Add the handlers to the logger
+    # Add handlers
     logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
 
