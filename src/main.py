@@ -16,18 +16,27 @@ class voiceNavigationApp:
 
     def process_voice_command(self) -> bool:
         """
-        Process a voice command and return a response.
-        bool : True if the command is processed successfully, False otherwise.
+        Process voice command and handle the entire workflow.
+        Returns:
+            bool: True if processing successful, False otherwise
         """
         try:
+            print("\n📝 Instructions:")
+            print("1. Wait for the '🎤 Start speaking now...' prompt")
+            print("2. Speak clearly into the microphone")
+            print("3. Pause briefly when finished speaking\n")
+            
             # 1. Voice recognition
             result = self.speech_recognizer.listen_and_convert()
             if not result:
-                self.logger.error("Error during voice recognition")
+                print("❌ Voice recognition failed. Tips:")
+                print("- Speak louder and more clearly")
+                print("- Reduce background noise")
+                print("- Move closer to the microphone\n")
                 return False
             
             text = result["text"]
-            self.logger.info(f"Recognized text: {text}")
+            print(f"✅ Recognized text: {text}")
 
             # 2. Analyze the intent
 
