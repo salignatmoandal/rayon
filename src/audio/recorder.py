@@ -13,9 +13,9 @@ class AudioRecorder:
         self.logger = logging.getLogger(__name__)
         
         # Configuration
-        self.recognizer.energy_threshold = 300
+        self.recognizer.energy_threshold = 4000
         self.recognizer.dynamic_energy_threshold = True
-        self.recognizer.pause_threshold = 0.8
+        self.recognizer.pause_threshold = 1.0
         self.non_speaking_duration = 0.5
         
     def calibrate(self, duration: int = 5) -> bool:
@@ -41,9 +41,12 @@ class AudioRecorder:
         Returns: Audio data as a dictionary.
         """
         try:
+            print("🎤 Recording...")
             with self.microphone as source:
                 audio = self.recognizer.listen(source, timeout=timeout)
-                
+            print("✅ Recording finished")
+            self.logger.debug(f"Level of sound detected: {self.recognizer.energy_threshold}")
+            
             return {
                 "audio_data": audio,
                 "sample_rate": audio.sample_rate,
@@ -80,4 +83,13 @@ class AudioRecorder:
         except sr.RequestError as e:
             self.logger.error(f"API unavailable or unresponsive: {e}")
             return None
+                
+    def check_microphone(self) -> bool:
+        try:
+            with self.microphone as source:
+                self.recognizer.adjust_for_ambient_noise(source, duration=1)
+            return True
+        except Exception as e:
+            self.logger.error(f"Erreur de microphone : {e}")
+            return False
                 

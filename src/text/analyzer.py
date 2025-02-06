@@ -17,7 +17,7 @@ class TextAnalyzer:
         }
         self.logger = logging.getLogger(__name__)
 
-    def extract_locations(self, text: str) -> Optional[List[str]]:
+    def extract_location(self, text: str) -> Optional[List[str]]:
         """
         Extract locations from text.
         Args: Text.
@@ -25,7 +25,7 @@ class TextAnalyzer:
         """
         try:
             doc = self.nlp(text)
-            locations = [ent.text for ent in doc.ents if ent.label_ in ["LOC", "GPE"]]
+            locations = [ent.text for ent in doc.ents if ent.label_ ]
             return locations
         except Exception as e:
             self.logger.error(f"Error extracting locations: {e}")
