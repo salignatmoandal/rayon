@@ -1,5 +1,7 @@
 from typing import Optional, Dict, Any
 import speech_recognition as sr
+import logging
+from audio.recorder import AudioRecorder
 from audio.processor import AudioProcessor
 
 class SpeechRecognizer:
@@ -8,10 +10,12 @@ class SpeechRecognizer:
     """
     
     def __init__(self):
+        self.audio_recorder = AudioRecorder()
         self.audio_processor = AudioProcessor()
         self.recognizer = sr.Recognizer()
+        self.logger = logging.getLogger(__name__)
 
-    def convert_to_text(self,audio_data:sr.AudioData) -> Optional[str]:
+    def convert_to_text(self, audio_data: sr.AudioData) -> Optional[str]:
         """
         Convert audio data to text.
         Args: Audio data.
@@ -28,30 +32,34 @@ class SpeechRecognizer:
         except sr.RequestError as e:
             self.logger.error(f"API unavailable or unresponsive: {e}")
             return None
+
     def listen_and_convert(self) -> Optional[Dict[str, Any]]:
         """
         Record audio, clean it and convert to text.
         """
         try:
-            # Record audio
-            audio = self.audio_processor.record_audio()
-            if not audio:
+            # Calibration et enregistrement
+            if not self.audio_recorder.calibrate():
                 return None
-            
-            # Clean audio
-            cleaned_audio = self.audio_processor.reduce_noise(audio)
-            if cleaned_audio is None:
+                
+            recording = self.audio_recorder.record()
+            if not recording:
                 return None
-            
-            # Convert to text
+                
+            # Nettoyage audio
+            cleaned_audio = self.audio_processor.reduce_noise(recording["audio_data"])
+            if not cleaned_audio:
+                return None
+                
+            # Conversion en texte
             text = self.convert_to_text(cleaned_audio)
             if not text:
                 return None
-            
+                
             return {
                 "text": text,
-                "audio_duration": len(audio.get_raw_data()) / (audio.sample_rate * 2),
-                "channels": 1
+                "audio_duration": recording["duration"],
+                "channels": recording["channels"]
             }
         except Exception as e:
             self.logger.error(f"Error recognizing speech: {e}")
