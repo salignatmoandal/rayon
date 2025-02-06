@@ -1,7 +1,7 @@
 import speech_recognition as sr
 from typing import Optional, Dict, Any
 import logging
-from config import AUDIO_SAMPLE_RATE
+from src.utils.config import AUDIO_SAMPLE_RATE
 
 class AudioRecorder:
     """
