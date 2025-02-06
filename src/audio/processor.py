@@ -39,21 +39,25 @@ class AudioProcessor:
             Optional[sr.AudioData]: Reduced audio data
         """
         try:
-            # Convert audio to numpy array
+            # Conversion en array numpy
             audio_array = np.frombuffer(audio_data.get_raw_data(), dtype=np.int16)
             
-            # Apply noise reduction
+            # Paramètres optimisés pour la réduction du bruit
             cleaned_array = nr.reduce_noise(
                 y=audio_array,
                 sr=audio_data.sample_rate,
-                stationary=True
+                stationary=True,
+                prop_decrease=0.75,
+                n_jobs=2  # Parallélisation
             )
             
-            # Reconvert to AudioData
+            # Normalisation du volume
+            cleaned_array = np.int16(cleaned_array * (32767/max(abs(cleaned_array))))
+            
             return sr.AudioData(
                 cleaned_array.tobytes(),
                 audio_data.sample_rate,
-                2  # sample width
+                2
             )
         except Exception as e:
             self.logger.error(f"Error reducing noise: {e}")
