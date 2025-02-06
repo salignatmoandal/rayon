@@ -5,6 +5,7 @@ from text.analyzer import TextAnalyzer
 from location.geocoder import Geolocation
 from location.suggestions import AISuggester
 from utils.logger import setup_logger
+from display.map_display import MapDisplay
 
 class voiceNavigationApp:
     def __init__(self):
@@ -13,6 +14,7 @@ class voiceNavigationApp:
         self.text_analyzer = TextAnalyzer()
         self.geolocation = Geolocation()
         self.ai_suggester = AISuggester()
+        self.map_display = MapDisplay()
 
     def process_voice_command(self) -> bool:
         """
