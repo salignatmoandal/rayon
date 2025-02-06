@@ -1,36 +1,30 @@
 import speech_recognition as sr
 from typing import Optional, Dict, Any
-import numpy as np
 import logging
+from config import AUDIO_SAMPLE_RATE
 
 class AudioRecorder:
     """
     Record audio from the microphone and convert to text.
     """
-    def __init__(self, sample_rate: int = 16000, chunk_size: int = 1024):
+    def __init__(self):
         self.recognizer = sr.Recognizer()
-        self.microphone = sr.Microphone(sample_rate=sample_rate, chunk_size=chunk_size)
+        self.microphone = sr.Microphone(sample_rate=AUDIO_SAMPLE_RATE)
         self.logger = logging.getLogger(__name__)
-
-        # Default calibration duration
-        self.calibration_duration = 5
-        self.energy_threshold = 300
-        self.dynamic_energy_threshold = True
-        self.pause_threshold = 0.8
+        
+        # Configuration
+        self.recognizer.energy_threshold = 300
+        self.recognizer.dynamic_energy_threshold = True
+        self.recognizer.pause_threshold = 0.8
         self.non_speaking_duration = 0.5
-    
-    def record_audio(self, duration: int = 5) -> Optional[Dict[str, Any]]:
-        """
-        Record audio from the microphone.
-        """
-    def calibrate(self, duration: int=None) -> bool:
+        
+    def calibrate(self, duration: int = 5) -> bool:
         """
         Calibrate the microphone.
         Args: Duration of the calibration in seconds.
         Returns: True if the calibration is successful, False otherwise.
         """
         try:
-            duration = duration or self.calibration_duration
             self.logger.info(f"Calibrating for {duration} seconds...")
             with self.microphone as source:
                 self.recognizer.adjust_for_ambient_noise(source, duration=duration)
@@ -39,8 +33,8 @@ class AudioRecorder:
         except Exception as e:
             self.logger.error(f"Error during calibration: {e}")
             return False
-    
-    def record(self, timeout:Optional[float]=None) -> Optional[Dict[str, Any]]:
+            
+    def record(self, timeout: Optional[float] = None) -> Optional[Dict[str, Any]]:
         """
         Record audio from the microphone.
         Args: Timeout in seconds.
@@ -48,20 +42,14 @@ class AudioRecorder:
         """
         try:
             with self.microphone as source:
-                audio = self.recognizer.listen(source,timeout=timeout)
-            duration = len(audio.get_raw_data()) / (audio.sample_rate * 2)
+                audio = self.recognizer.listen(source, timeout=timeout)
+                
             return {
                 "audio_data": audio,
                 "sample_rate": audio.sample_rate,
-                "duration": duration,
+                "duration": len(audio.get_raw_data()) / (audio.sample_rate * 2),
                 "channels": 1
             }
-        except sr.WaitTimeoutError:
-            self.logger.warning("Time out recording audio")
-            return None
-        except sr.RequestError as e:
-            self.logger.error(f"API unavailable or unresponsive: {e}")
-            return None
         except Exception as e:
             self.logger.error(f"Error recording audio: {e}")
             return None

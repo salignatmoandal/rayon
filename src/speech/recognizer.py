@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Any
 import speech_recognition as sr
-from ..audio.processor import AudioProcessor
+from audio.processor import AudioProcessor
 
 class SpeechRecognizer:
     """
