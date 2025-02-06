@@ -1,7 +1,7 @@
 import logging
 import os 
 from datetime import datetime
-from utils.config import LOG_DIR
+from config import LOG_DIR
 
 def setup_logger(name: str= __name__) -> logging.Logger:
     """
