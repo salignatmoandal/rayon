@@ -68,6 +68,10 @@ class voiceNavigationApp:
                 self.logger.error("No suggestions found")
                 return False
             
+            print(f"📍 Location: {location}")
+            print(f"🎯 Coordinates: {coordinates}")
+            print(f"📝 Found {len(suggestions)} suggestions")
+            
             # 5. Display the map
             self.map_display.display_map(coordinates, suggestions)
             return True

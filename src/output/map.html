@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ca358883e4d1407f06fbe03e75a76ac7 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_ca358883e4d1407f06fbe03e75a76ac7" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_ca358883e4d1407f06fbe03e75a76ac7 = L.map(
+                "map_ca358883e4d1407f06fbe03e75a76ac7",
+                {
+                    center: [48.8512945, 2.3760274],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_502f79d0ff3d1a272e1d52c68e13ca58 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_ca358883e4d1407f06fbe03e75a76ac7);
+        
+    
+            var marker_1da8d9aa1887b8766d0f8e7f56ad30de = L.marker(
+                [48.8512945, 2.3760274],
+                {}
+            ).addTo(map_ca358883e4d1407f06fbe03e75a76ac7);
+        
+    
+            var icon_69b0c6c6f17ea231b716124b00f2de07 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_1da8d9aa1887b8766d0f8e7f56ad30de.setIcon(icon_69b0c6c6f17ea231b716124b00f2de07);
+        
+    
+        var popup_0b1b08db3d3a91b25027fec7308f199b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1fb40c50860c0aff233969affc798086 = $(`<div id="html_1fb40c50860c0aff233969affc798086" style="width: 100.0%; height: 100.0%;">Votre position de recherche</div>`)[0];
+                popup_0b1b08db3d3a91b25027fec7308f199b.setContent(html_1fb40c50860c0aff233969affc798086);
+            
+        
+
+        marker_1da8d9aa1887b8766d0f8e7f56ad30de.bindPopup(popup_0b1b08db3d3a91b25027fec7308f199b)
+        ;
+
+        
+    
+    
+            var marker_9894585adcea2787b035bb76ac5e8fb2 = L.marker(
+                [48.8512945, 2.3760274],
+                {}
+            ).addTo(map_ca358883e4d1407f06fbe03e75a76ac7);
+        
+    
+            var icon_1e1efe528c7a3c415d744f411ae1ebe9 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_9894585adcea2787b035bb76ac5e8fb2.setIcon(icon_1e1efe528c7a3c415d744f411ae1ebe9);
+        
+    
+        var popup_accd2395d1f8ae6da2414cf7f77e1069 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_f29f805693e8decef902a965e1013f6f = $(`<div id="html_f29f805693e8decef902a965e1013f6f" style="width: 100.0%; height: 100.0%;"><b>Marché d'Aligre</b><br>Un marché animé offrant une variété de produits frais et locaux, ainsi que des stands de produits artisanaux et vintage. Ambiance authentique et conviviale.</div>`)[0];
+                popup_accd2395d1f8ae6da2414cf7f77e1069.setContent(html_f29f805693e8decef902a965e1013f6f);
+            
+        
+
+        marker_9894585adcea2787b035bb76ac5e8fb2.bindPopup(popup_accd2395d1f8ae6da2414cf7f77e1069)
+        ;
+
+        
+    
+    
+            var marker_8e302587d68f6a03dd44797c271b70a3 = L.marker(
+                [48.8512945, 2.3760274],
+                {}
+            ).addTo(map_ca358883e4d1407f06fbe03e75a76ac7);
+        
+    
+            var icon_5ea9775fe681376e58d064cec3c42b31 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_8e302587d68f6a03dd44797c271b70a3.setIcon(icon_5ea9775fe681376e58d064cec3c42b31);
+        
+    
+        var popup_3862ee1662a80a0d1e45df176a04cf3c = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_e82d799b8fbd2488a0d09b04eb29ed27 = $(`<div id="html_e82d799b8fbd2488a0d09b04eb29ed27" style="width: 100.0%; height: 100.0%;"><b>Promenade plantée</b><br>Ancienne voie ferrée réaménagée en un parc linéaire verdoyant et paisible. Parfait pour une balade à pied ou à vélo à l'abri de l'agitation urbaine.</div>`)[0];
+                popup_3862ee1662a80a0d1e45df176a04cf3c.setContent(html_e82d799b8fbd2488a0d09b04eb29ed27);
+            
+        
+
+        marker_8e302587d68f6a03dd44797c271b70a3.bindPopup(popup_3862ee1662a80a0d1e45df176a04cf3c)
+        ;
+
+        
+    
+    
+            var marker_6addea3c6455cb7b8424d65c67b5fc37 = L.marker(
+                [48.8512945, 2.3760274],
+                {}
+            ).addTo(map_ca358883e4d1407f06fbe03e75a76ac7);
+        
+    
+            var icon_fc4e04e3b99873dec392388cb4eff5fb = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_6addea3c6455cb7b8424d65c67b5fc37.setIcon(icon_fc4e04e3b99873dec392388cb4eff5fb);
+        
+    
+        var popup_2e8e9d6ecfc8696c0af37eab8180ef31 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_1cc9cc4b2b4672150224d379db259088 = $(`<div id="html_1cc9cc4b2b4672150224d379db259088" style="width: 100.0%; height: 100.0%;"><b>La Cinémathèque Française</b><br>Musée du cinéma proposant des expositions temporaires, des projections de films classiques et contemporains, ainsi que des rencontres avec des réalisateurs. Lieu incontournable pour les passionnés de cinéma.</div>`)[0];
+                popup_2e8e9d6ecfc8696c0af37eab8180ef31.setContent(html_1cc9cc4b2b4672150224d379db259088);
+            
+        
+
+        marker_6addea3c6455cb7b8424d65c67b5fc37.bindPopup(popup_2e8e9d6ecfc8696c0af37eab8180ef31)
+        ;
+
+        
+    
+</script>
+</html>

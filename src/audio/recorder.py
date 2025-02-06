@@ -12,12 +12,12 @@ class AudioRecorder:
         self.microphone = sr.Microphone(sample_rate=AUDIO_SAMPLE_RATE)
         self.logger = logging.getLogger(__name__)
         
-        # Adjust recognition parameters for better detection
-        self.recognizer.energy_threshold = 1000  # Lower for better sensitivity
+        # Optimized parameters for faster response
+        self.recognizer.energy_threshold = 1500
         self.recognizer.dynamic_energy_threshold = True
-        self.recognizer.pause_threshold = 2.0  # Increase for more patience
-        self.recognizer.phrase_threshold = 0.5
-        self.non_speaking_duration = 1.0
+        self.recognizer.pause_threshold = 0.5  # Reduced from 2.0
+        self.recognizer.phrase_threshold = 0.3  # Reduced from 0.5
+        self.non_speaking_duration = 0.3  # Reduced from 1.0
         
     def calibrate(self, duration: int = 5) -> bool:
         """
@@ -58,7 +58,7 @@ class AudioRecorder:
             self.logger.error(f"Error recording audio: {e}")
             return None
             
-    def record_with_vad(self, MIN_DURATION: float = 1.0, MAX_DURATION: float = 20.0) -> Optional[Dict[str, Any]]:
+    def record_with_vad(self, MIN_DURATION: float = 0.5, MAX_DURATION: float = 10.0) -> Optional[Dict[str, Any]]:
         """
         Record audio with Voice Activity Detection (VAD).
         Args:
@@ -72,13 +72,13 @@ class AudioRecorder:
             print("🎤 Start speaking now...")
             
             with self.microphone as source:
-                # Adjust for ambient noise before each recording
-                self.recognizer.adjust_for_ambient_noise(source, duration=1)
+                # Reduced calibration time
+                self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
                 
                 try:
                     audio = self.recognizer.listen(
                         source,
-                        timeout=MAX_DURATION,
+                        timeout=5.0,  # Reduced timeout
                         phrase_time_limit=MAX_DURATION
                     )
                     print("✅ Recording completed")
