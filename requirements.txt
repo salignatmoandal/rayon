@@ -8,7 +8,8 @@ python-dotenv==1.0.0
 noisereduce==3.0.0
 numpy==1.24.3
 torch==2.1.0
-pyaudio==0.2.11
+pyaudio==0.2.14
+httpx==0.28.1
 
 
 
