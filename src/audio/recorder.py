@@ -66,4 +66,30 @@ class AudioRecorder:
             self.logger.error(f"Error recording audio: {e}")
             return None
             
+    def record_with_vad(self, MIN_DURATION: float= 0.5, MAX_DURATION: float= 10.0) -> Optional[Dict[str, Any]]:
+        """
+        Record audio from the microphone with voice activity detection.
+        """
+        try:
+            self.logger.info("Starting voice activity detection...")
+            with self.microphone as source:
+                audio = self.recognizer.listen(
+                    source,
+                    phrase_time_limit=MAX_DURATION,
+                    timeout=MIN_DURATION
+                )
+                duration = len(audio.get_raw_data()) / (audio.sample_rate * 2)
+                return {
+                    "audio_data": audio,
+                    "sample_rate": audio.sample_rate,
+                    "duration": duration,
+                    "channels": 1,
+                    "vad": True
+                }
+        except sr.WaitTimeoutError:
+            self.logger.warning("Time out recording audio")
+            return None
+        except sr.RequestError as e:
+            self.logger.error(f"API unavailable or unresponsive: {e}")
+            return None
                 
