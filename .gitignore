@@ -34,3 +34,5 @@ secrets.json
 *.swp
 .swo
 *~
+
+.cursorrules
