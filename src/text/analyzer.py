@@ -21,47 +21,71 @@ class TextAnalyzer:
         self.logger = logging.getLogger(__name__)
         # Initialize spaCy Matcher with the shared vocabulary.
         self.matcher = Matcher(self.nlp.vocab)
-        # Define a basic pattern for addresses: a number followed by a street indicator and at least one token.
-        address_pattern = [
-            {"LIKE_NUM": True},
-            {"LOWER": {"IN": ["rue", "avenue", "boulevard", "impasse", "chemin", "place"]}},
-            {"IS_ALPHA": True, "OP": "+"}
+        
+        # Patterns d'adresses plus complets
+        address_patterns = [
+            # Pattern standard: numéro + type de voie + nom
+            [
+                {"LIKE_NUM": True},
+                {"LOWER": {"IN": ["bis", "ter"]}, "OP": "?"},
+                {"LOWER": {"IN": ["rue", "avenue", "boulevard", "impasse", "chemin", "place"]}},
+                {"LOWER": {"IN": ["du", "de", "des", "de la", "d'", "l'"]}, "OP": "?"},
+                {"IS_ALPHA": True, "OP": "+"}
+            ],
+            # Pattern inversé: type de voie + nom + numéro
+            [
+                {"LOWER": {"IN": ["rue", "avenue", "boulevard", "impasse", "chemin", "place"]}},
+                {"LOWER": {"IN": ["du", "de", "des", "de la", "d'", "l'"]}, "OP": "?"},
+                {"IS_ALPHA": True, "OP": "+"},
+                {"LOWER": {"IN": ["numéro", "n°", "n"]}, "OP": "?"},
+                {"LIKE_NUM": True},
+                {"LOWER": {"IN": ["bis", "ter"]}, "OP": "?"}
+            ]
         ]
-        self.matcher.add("ADDRESS", [address_pattern])
+        
+        for idx, pattern in enumerate(address_patterns):
+            self.matcher.add(f"ADDRESS_{idx}", [pattern])
 
     def extract_location(self, text: str) -> Optional[List[str]]:
         """
-        Enhanced extraction of locations using spaCy's NER and Matcher.
-        Returns a list of identified locations/entities, aiming to capture address coordinates accurately.
+        Extraction améliorée des locations combinant Matcher et NER.
         """
         try:
             doc = self.nlp(text)
-            # Debug: log token-level information.
-            tokens_info = [(token.text, token.pos_, token.dep_) for token in doc]
-            self.logger.debug(f"Token-level info: {tokens_info}")
+            locations = set()  # Utilisation d'un set pour éviter les doublons
 
-            # First, use the Matcher to find address-like patterns.
+            # Extraction via Matcher
             matches = self.matcher(doc)
-            addresses = [doc[start:end].text for match_id, start, end in matches]
-            if addresses:
-                self.logger.debug(f"Addresses found by matcher: {addresses}")
-                return addresses
+            for match_id, start, end in matches:
+                address = doc[start:end].text
+                locations.add(address)
 
-            # If no address-like pattern is found, fall back to NER.
-            ner_locations = [ent.text for ent in doc.ents if ent.label_]
-            if ner_locations:
-                self.logger.debug(f"Locations found by NER: {ner_locations}")
-                return ner_locations
+            # Extraction via NER
+            for ent in doc.ents:
+                if ent.label_ in ["LOC", "GPE"]:
+                    locations.add(ent.text)
 
-            # Further fallback: return numeric tokens (e.g., potential street numbers) if available.
+            # Nettoyage et validation des résultats
+            cleaned_locations = []
+            for loc in locations:
+                # Suppression des espaces multiples et nettoyage basique
+                cleaned_loc = " ".join(loc.split())
+                if len(cleaned_loc.split()) >= 2:  # Vérifie que la location contient au moins 2 mots
+                    cleaned_locations.append(cleaned_loc)
+
+            if cleaned_locations:
+                self.logger.debug(f"Locations trouvées: {cleaned_locations}")
+                return cleaned_locations
+
+            # Fallback pour les numéros si aucune location n'est trouvée
             numbers = [token.text for token in doc if token.like_num]
             if numbers:
-                self.logger.debug(f"Fallback numeric tokens: {numbers}")
+                self.logger.debug(f"Tokens numériques trouvés: {numbers}")
                 return numbers
 
             return []
         except Exception as e:
-            self.logger.error(f"Error extracting locations: {e}")
+            self.logger.error(f"Erreur lors de l'extraction des locations: {e}")
             return None
 
     def extract_category(self, text: str) -> Optional[Dict[str, Any]]:
