@@ -30,14 +30,14 @@ src/
 # Module Descriptions
 
 ## 1. Audio Module
-	•	Purpose:
+	•Purpose:
 Captures and processes audio input.
-	•	Components:
-	•	processor.py: Contains functions and algorithms for processing raw audio data (e.g., noise reduction, normalization).
+	•Components:
+	•processor.py: Contains functions and algorithms for processing raw audio data (e.g., noise reduction, normalization).
 	•	recorder.py: Manages the audio recording process, interfacing with hardware or software APIs to capture sound.
 
 ## Speech Module
-	•	Purpose:
+	•Purpose:
 Converts spoken language into text.
 	•	Component:
 	•	recognizer.py: Implements speech-to-text functionality using AI models to accurately transcribe audio input into text.
