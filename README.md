@@ -36,13 +36,11 @@ Captures and processes audio input.
 	•	recorder.py: Manages the audio recording process, interfacing with hardware or software APIs to capture sound.
 
 ## Speech Module
-	•Purpose:
 Converts spoken language into text.
 	•	Component:
 	•	recognizer.py: Implements speech-to-text functionality using AI models to accurately transcribe audio input into text.
 
 ##  Text Module
-Purpose:
 Analyzes and processes the transcribed text.
 	•	Component:
 	•	analyzer.py: Performs natural language processing tasks such as text categorization, extraction of relevant information (e.g., addresses, keywords), and overall text analysis.
