@@ -53,7 +53,6 @@ Provides geocoding and location-based services.
 	•	suggestions.py: Offers AI-driven location suggestions, enhancing user experience with context-aware recommendations.
 
 ## Utils Module
-	•	Purpose:
 Contains utility functions and common services used across the project.
 	•	Component:
 	•	logger.py: Implements logging mechanisms to record application events, errors, and performance metrics for easier debugging and monitoring.
