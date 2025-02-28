@@ -46,7 +46,6 @@ Analyzes and processes the transcribed text.
 	•	analyzer.py: Performs natural language processing tasks such as text categorization, extraction of relevant information (e.g., addresses, keywords), and overall text analysis.
 
  ## Location Module
- Purpose:
 Provides geocoding and location-based services.
 	•	Components:
 	•	geocoder.py: Translates text-based addresses into geographic coordinates (latitude and longitude).
