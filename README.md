@@ -56,9 +56,7 @@ Contains utility functions and common services used across the project.
 	•	Component:
 	•	logger.py: Implements logging mechanisms to record application events, errors, and performance metrics for easier debugging and monitoring.
 
-# Main Application
-	•	File: main.py
-	•	Purpose:
+# Main Application	File: main.py
 Acts as the central entry point of the application. It orchestrates the workflow by:
 	•	Initiating audio recording and processing.
 	•	Converting speech to text using the speech module.
