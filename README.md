@@ -28,6 +28,7 @@ src/
 ```
 
 # Module Descriptions
+
 ## 1. Audio Module
 	•	Purpose:
 Captures and processes audio input.
